@@ -1,0 +1,67 @@
+﻿@page "/DepartmentPage"
+@using SiteBlazor.Components.Pages.GenericModal
+@using SiteBlazor.Components.Pages.Product
+@rendermode InteractiveServer
+
+<PageTitle>Department</PageTitle>
+
+@if (showMessageBox)
+{
+    <MessageBox Message="@errorMessage" Close="CloseMessageBox" />
+}
+<h1>Department</h1>
+<br />
+<center>
+    <div class="round-border">
+        <h2 class="border-title">Filtro de pesquisa</h2>
+        <table cellpadding="10">
+            <tr>
+                <th class="rightColumn">Id</th>
+                <th class="leftColumn"><input type="text" onkeypress="mascara(this, soNumeros)" @bind="TXT_Id" placeholder="" maxlength="8" /></th>
+            </tr>
+            <tr>
+                <th class="rightColumn">Name</th>
+                <th class="leftColumn"><input type="text" @bind="TXT_Name" placeholder="" maxlength="20" /></th>
+            </tr>
+            <tr>
+                <th colspan="2" class="centerColumn"><button class="btn btn-primary" @onclick="BTN_Search">Search</button></th>
+            </tr>
+        </table>
+    </div>
+
+    @if (DepartmentList != null && DepartmentList.Count > 0)
+    {
+        <br />
+        <br />
+        <div class="round-border">
+            <h3 class="border-title">Lista de Produtos</h3>
+            <br />
+            <table>
+                <thead>
+                    <tr>
+                        <th class="grayRow">ID</th>
+                        <th class="grayRow">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tag in DepartmentList)
+                    {
+                        <tr>
+                            @if (GrayColumn())
+                            {
+                                <td class="grayRow" width="200px">@tag.DepartmentId</td>
+                                <td class="grayRow" width="150px">@tag.Name</td>
+                            }
+                            @if (grayRow)
+                            {
+                                <td class="NograyRow" width="200px">@tag.DepartmentId</td>
+                                <td class="NograyRow" width="300px">@tag.Name</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</center>

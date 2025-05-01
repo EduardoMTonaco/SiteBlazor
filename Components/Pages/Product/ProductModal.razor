@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using SiteBlazor.Class.DTO
+@using SiteBlazor.Components.Pages.GenericModal
+
+@if (showMessageBox)
+{
+    <MessageBox Message="@Message" Close="CloseModal" />
+}
+<div class="modal" style="@ModalStyle">
+    <div class="modal-backgroud">
+    </div>
+    <div class="modal-dialog">
+        <div class="modal-content" style="@Size">
+            <div class="modal-color">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Title</h5>
+                    <button type="button" class="close" @onclick="CloseModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                @ChildContent
+                <table cellpadding="10" class="PropertyTable">
+                    <tr>
+                        <th class="rightColumn">Name</th>
+                        <th class="leftColumn"><input type="text" @bind="TXT_Name" placeholder="" maxlength="20" /></th>
+                    </tr>
+                    <tr>
+                        <th class="rightColumn">Description</th>
+                        <th class="leftColumn"><textarea type="text" @bind="TXT_Description" style="width: 100%; height: 100px; overflow: auto; word-wrap: break-word; resize: none;" maxlength="500" rows="10" /></th>
+                    </tr>
+                    <tr>
+                        <th class="rightColumn">Tag</th>
+                        <th class="leftColumn">
+                            <select @bind="SelectedTagValue">
+                                <option value="@int.MinValue">--Selecione--</option>
+                                @foreach (TagDTO tag in TagList)
+                                {
+                                    <option value="@tag.TagId">@tag.Name</option>
+                                }
+                            </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="rightColumn">Gender</th>
+                        <th class="leftColumn">
+                            <select @bind="SelectedGenderValue">
+                                <option value="@int.MinValue">--Selecione--</option>
+                                @foreach (GenderDTO gender in GenderList)
+                                {
+                                    <option value="@gender.GenderId">@gender.GenderName</option>
+                                }
+                            </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="centerColumn"><button class="btn btn-primary" @onclick="BTN_Confirm">Confirm</button></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-color">
+                <div class="modal-footer">
+                    @FooterContent
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

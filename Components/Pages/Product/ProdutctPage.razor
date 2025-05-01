@@ -1,0 +1,114 @@
+﻿@page "/ProductPage"
+@using SiteBlazor.Components.Pages.GenericModal
+@rendermode InteractiveServer
+
+<PageTitle>ProductPage</PageTitle>
+
+@if (showMessageBox)
+{
+    <MessageBox Message="@errorMessage" Close="CloseMessageBox" />
+}
+<ProductModal @ref="productModal" Title="Adicionar Produto" ProductId="ProductId" IsOpen="isOpenProductModal" Width="500" Height="500">
+    <ChildContent>
+    </ChildContent>
+    <FooterContent>
+        @*     <button @onclick="FecharModal">Fechar</button> *@
+    </FooterContent>
+</ProductModal>
+
+<ConfirmModal @ref="confirmModal" Title="Excluir Produto" IsOpen="isOpenConfirmModal" Width="500" Height="200">
+    <ChildContent>
+        <div>Deseja deletar o produto : @ProductId ?</div>
+    </ChildContent>
+    <FooterContent>
+        <button @onclick="DeleteProduct">Confirmar</button>
+    </FooterContent>
+</ConfirmModal>
+
+<h1>Produtos</h1>
+<br />
+<center>
+    <div class="round-border">
+        <h2 class="border-title">Filtro de pesquisa</h2>
+        <table cellpadding="10">
+            <tr>
+                <th class="rightColumn">Id</th>
+                <th class="leftColumn"><input type="text" onkeypress="mascara(this, soNumeros)" @bind="TXT_Id" placeholder="" maxlength="8" /></th>
+            </tr>
+            <tr>
+                <th class="rightColumn">Name</th>
+                <th class="leftColumn"><input type="text" @bind="TXT_Name" placeholder="" maxlength="20" /></th>
+            </tr>
+            <tr>
+                <th class="rightColumn">Description</th>
+                <th class="leftColumn"><input type="text" @bind="TXT_Description" placeholder="" maxlength="20" /></th>
+            </tr>
+            <tr>
+                <th class="rightColumn">Department</th>
+                <th class="leftColumn"><input type="text" @bind="TXT_Department" placeholder="" maxlength="20" /></th>
+            </tr>
+            <tr>
+                <th colspan="2" class="centerColumn"><button class="btn btn-primary" @onclick="BTN_Search">Search</button></th>
+            </tr>
+        </table>
+    </div>
+    @if (ProductList != null && ProductList.Count > 0)
+    {
+        <br />
+        <br />
+        <br />
+        <div class="round-border">
+            <h3 class="border-title">Lista de Produtos</h3>
+            <br />
+            <table>
+                <thead>
+                    <tr>
+                        <th class="grayRow"></th>
+                        <th class="grayRow">ID</th>
+                        <th class="grayRow">Name</th>
+                        <th class="grayRow">Description</th>
+                        <th class="grayRow">Tag</th>
+                        <th class="grayRow">Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in ProductList)
+                    {
+                        <tr>
+                            @if (GrayColumn())
+                            {
+                                <td class="grayRow">
+                                    <div class="leftColumn">
+                                        <a @onclick="@(e => BTN_OpenModal(product.Productid))"><img class="Pointer" width="25" height="auto" title="Alterar" src="@EditImage" /></a>
+                                        <a @onclick="@(e => BTN_DeleteModal(product.Productid))"><img class="Pointer" width="25" height="auto" title="Excluir" src="@DeleteImage" /></a>
+                                       
+                                    </div>
+                                </td>
+                                <td class="grayRow" width="100px"> @product.Productid</td>
+                                <td class="grayRow" width="200px">@product.Name</td>
+                                <td class="grayRow" width="300px">@product.Description</td>
+                                <td class="grayRow" width="150px">@product.Tag.Name</td>
+                                <td class="grayRow" width="150px">@product.Tag.Department.Name</td>
+                            }
+                            @if (grayRow)
+                            {
+                                <td class="NograyRow">
+                                    <div class="leftColumn">
+                                        <a @onclick="@(e => BTN_OpenModal(product.Productid))"><img class="Pointer" width="25" height="auto" title="Alterar" src="@EditImage" /></a>
+                                        <a @onclick="@(e => BTN_DeleteModal(product.Productid))"><img class="Pointer" width="25" height="auto" title="Excluir" src="@DeleteImage" /></a>                                       
+                                    </div>
+                                </td>
+                                <td class="NograyRow" width="100px"> @product.Productid</td>
+                                <td class="NograyRow" width="200px">@product.Name</td>
+                                <td class="NograyRow" width="300px">@product.Description</td>
+                                <td class="NograyRow" width="150px">@product.Tag.Name</td>
+                                <td class="NograyRow" width="150px">@product.Tag.Department.Name</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</center>

@@ -1,0 +1,21 @@
+﻿@page "/"
+@using SiteBlazor.Components.Pages
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+<br />
+<br />
+<InputFile OnChange="@(e => SelecionarImagem(e.File))" accept=".jpg, .jpeg, .png" />
+<br />
+<br />
+ @if (!string.IsNullOrEmpty(imageBase64))
+{
+    <img src="@imageBase64" width="200" style="max-height: 300px;" @onload="UpdateImage" />
+}
+<br />
+<br />
+<button @onclick="SaveImage">Salvar</button>
+<br />
+<br />
+<p>@message</p>
+<img src="@imagemUrl" width="200px" /> 

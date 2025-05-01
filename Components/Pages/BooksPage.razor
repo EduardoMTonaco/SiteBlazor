@@ -1,0 +1,60 @@
+﻿@page "/BooksPage"
+@rendermode InteractiveServer
+
+<PageTitle>Books</PageTitle>
+
+@if (showMessageBox)
+{
+    <MessageBox Message="@errorMessage" Close="CloseMessageBox" />
+}
+<h1>Books</h1>
+<center>
+    <table cellpadding="10">
+        <tr>
+            <th class="rightColumn">Id</th>
+            <th class="leftColumn"><input type="text" onkeypress="mascara(this, soNumeros)" @bind="TXT_Id" placeholder="" maxlength="8" /></th>
+        </tr>
+        <tr>
+            <th class="rightColumn">Title</th>
+            <th class="leftColumn"><input type="text" @bind="TXT_Title" placeholder="" maxlength="20" /></th>
+        </tr>
+        <tr>
+            <th class="rightColumn">Primary Author</th>
+            <th class="leftColumn"><input type="text" @bind="Txt_PrimaryAuthor" placeholder="" maxlength="20" /></th>
+        </tr>
+        <tr>
+            <th colspan="2" class="centerColumn"><button class="btn btn-primary" @onclick="BTN_Search">Search</button></th>
+        </tr>
+    </table>
+    @if (BookList != null && BookList.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th class="grayRow">Id</th>
+                    <th class="grayRow">Title</th>
+                    <th class="grayRow">Primary Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in BookList)
+                {
+                    <tr>
+                        @if (GrayColumn())
+                        {
+                            <td class="grayRow" width="50px">@book.Id</td>
+                            <td class="grayRow" width="150px">@book.Title</td>
+                            <td class="grayRow" >@book.PrimaryAuthor</td>
+                        }
+                        @if (grayRow)
+                        {
+                            <td class="NograyRow" width="50px">@book.Id</td>
+                            <td class="NograyRow" width="150px">@book.Title</td>
+                            <td class="NograyRow" width="150px">@book.PrimaryAuthor</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</center>

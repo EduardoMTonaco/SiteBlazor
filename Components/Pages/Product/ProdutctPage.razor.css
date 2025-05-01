@@ -1,0 +1,16 @@
+﻿
+.rightColumn {
+    text-align: right;
+}
+
+.leftColumn {
+    text-align: left;
+}
+
+.centerColumn {
+    text-align: center;
+}
+
+.filterTable {
+    width: 100%;
+}

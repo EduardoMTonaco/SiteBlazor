@@ -1,0 +1,66 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+<style>
+    .rightColumn {
+        background-color: indianred;
+        text-align: right;
+    }
+
+    .leftColumn {
+        background-color: powderblue;
+        text-align: left;
+    }
+</style>
+<h1>Counter</h1>
+<center>
+    <table cellpadding="10" width="100%">
+        <tr>
+            <th class="rightColumn"> <input type="text" onkeypress="mascara(this, soNumeros)" @bind="TextBoxValue" placeholder="" maxlength="8" /></th>
+            <th class="leftColumn">
+                <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+            </th>
+        </tr>
+        <tr>
+            <th class="rightColumn"><input type="checkbox" /></th>
+            <th class="leftColumn"><input type="date" /></th>
+        </tr>
+        <tr>
+            <th class="rightColumn"><input type="number" /></th>
+            <th class="leftColumn"><input type="radio" /></th>
+        </tr>
+        <tr>
+            <th class="rightColumn"><input type="checkbox" /></th>
+            <th class="leftColumn"><input type="date" /></th>
+        </tr>
+        <tr>
+            <th class="rightColumn"><input type="checkbox" /></th>
+            <th class="leftColumn">
+                <input onkeypress="mascara(this, telefone)" maxlength="15" placeholder="(__) _____-____" type="text">
+            </th>
+        </tr>
+    </table>
+    @if (BookList != null)
+    {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Primary Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in BookList)
+            {
+                <tr>
+                    <td>@forecast.Id</td>
+                    <td>@forecast.Title</td>
+                    <td>@forecast.PrimaryAuthor</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+</center>
